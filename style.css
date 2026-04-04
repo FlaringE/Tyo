@@ -212,19 +212,6 @@ ul {
   gap: var(--space-sm);
 }
 
-.nav-logo__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: pulse 2.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
-}
-
 /* Nav links */
 .nav-links {
   display: flex;
@@ -326,6 +313,12 @@ ul {
 
 /* ── 11. SECTION COMMONS ─────────────────────────────────────── */
 .section { padding: var(--space-4xl) 0; }
+
+/* Offset for fixed nav so anchor links land correctly */
+.section[id],
+section[id] {
+  scroll-margin-top: 80px;
+}
 
 .section--alt { background: var(--color-bg-alt); }
 
@@ -881,14 +874,29 @@ ul {
 
 /* ── 22. RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .hero__grid,
   .about__grid,
   .research-layout { grid-template-columns: 1fr; }
 
-  .hero__bio    { margin: 0 auto var(--space-2xl); }
+  /* Hero: single column, photo on top, text below */
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Move photo visually above the text block */
+  .hero__visual { order: -1; }
+
+  .hero__bio     { margin: 0 auto var(--space-2xl); }
   .hero__actions { justify-content: center; }
-  .hero          { text-align: center; }
-  .hero__visual,
+  .hero          { text-align: center; padding: 7rem 0 4rem; }
+
+  /* Scale photo frame down for tablet */
+  .photo-frame {
+    width: 220px;
+    height: 265px;
+  }
+
+  /* Hide only the DNA research visual — not the photo */
   .research-visual { display: none; }
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -898,13 +906,20 @@ ul {
   .services-grid { grid-template-columns: 1fr 1fr; }
   .audience-grid { grid-template-columns: 1fr 1fr; }
 
-  .nav-links   { display: none; }
+  .nav-links     { display: none; }
   .hamburger-btn { display: flex; }
-  .nav-drawer  { display: flex; }
+  .nav-drawer    { display: flex; }
 }
 
 @media (max-width: 580px) {
-  .services-grid { grid-template-columns: 1fr; }
+  .services-grid  { grid-template-columns: 1fr; }
   .expertise-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Slightly smaller photo on small phones */
+  .photo-frame {
+    width: 180px;
+    height: 215px;
+  }
+
   .site-footer .container { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
